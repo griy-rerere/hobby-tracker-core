@@ -1,0 +1,44 @@
+[project]
+name = "hobby-tracker-core"
+version = "0.1.0"
+description = "Core domain for hobby tracker"
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+license = "MIT"
+requires-python = ">=3.14"
+dependencies = [
+]
+
+[tool.poetry]
+packages = [
+    { include = "hobby_tracker", from = "src" }
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "ruff (>=0.16.1,<0.17.0)",
+    "mypy (>=2.3.0,<3.0.0)",
+    "pre-commit (>=4.6.1,<5.0.0)"
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I"
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+strict = true
