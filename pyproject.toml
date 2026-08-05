@@ -9,10 +9,11 @@ license = "MIT"
 requires-python = ">=3.14"
 dependencies = [
 ]
-packages = [
-    {include = "hobby_tracker", from = "src"}
-]
 
+[tool.poetry]
+packages = [
+    { include = "hobby_tracker", from = "src" }
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
