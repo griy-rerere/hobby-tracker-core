@@ -9,6 +9,9 @@ license = "MIT"
 requires-python = ">=3.14"
 dependencies = [
 ]
+packages = [
+    {include = "hobby_tracker", from = "src"}
+]
 
 
 [build-system]
