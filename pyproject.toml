@@ -41,4 +41,14 @@ select = [
 quote-style = "double"
 
 [tool.mypy]
+python_version = "3.14"
 strict = true
+mypy_path = "src"
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src"
+]
+testpaths = [
+    "tests"
+]
