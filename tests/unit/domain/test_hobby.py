@@ -1,6 +1,7 @@
 from uuid import uuid7
 
 import pytest
+
 from hobby_tracker.domain import Hobby
 
 
