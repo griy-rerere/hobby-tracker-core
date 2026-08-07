@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from hobby_tracker.ports import ActivityEntryRepository, HobbyRepository
+from hobby_tracker.ports import ActivityRepository, HobbyRepository
 
 
 @pytest.fixture
@@ -11,5 +11,5 @@ def hobby_repository() -> Mock:
 
 
 @pytest.fixture
-def activity_entry_repository() -> Mock:
-    return Mock(spec=ActivityEntryRepository)
+def activity_repository() -> Mock:
+    return Mock(spec=ActivityRepository)

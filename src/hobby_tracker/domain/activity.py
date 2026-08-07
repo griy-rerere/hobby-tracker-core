@@ -4,7 +4,7 @@ from uuid import UUID, uuid7
 
 
 @dataclass(frozen=True)
-class ActivityEntry:
+class Activity:
     hobby_id: UUID
     duration: timedelta
     started_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))

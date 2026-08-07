@@ -1,24 +1,24 @@
 from datetime import datetime, timezone
 
-from hobby_tracker.application.requests import AddActivityEntryRequest
-from hobby_tracker.domain import ActivityEntry
-from hobby_tracker.ports import ActivityEntryRepository
+from hobby_tracker.application.requests import CreateActivityRequest
+from hobby_tracker.domain import Activity
+from hobby_tracker.ports import ActivityRepository
 
 
-class AddActivityEntry:
-    _repository: ActivityEntryRepository
+class CreateActivity:
+    _repository: ActivityRepository
 
-    def __init__(self, repository: ActivityEntryRepository) -> None:
+    def __init__(self, repository: ActivityRepository) -> None:
         self._repository = repository
 
-    def __call__(self, request: AddActivityEntryRequest) -> ActivityEntry:
+    def __call__(self, request: CreateActivityRequest) -> Activity:
         started_at = (
             datetime.now(timezone.utc)
             if request.started_at is None
             else request.started_at
         )
 
-        entry = ActivityEntry(
+        entry = Activity(
             hobby_id=request.hobby_id,
             duration=request.duration,
             started_at=started_at,

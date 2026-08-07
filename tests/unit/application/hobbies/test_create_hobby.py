@@ -2,8 +2,8 @@ from unittest.mock import Mock
 
 import pytest
 
+from hobby_tracker.application.hobbies import CreateHobby
 from hobby_tracker.application.requests import CreateHobbyRequest
-from hobby_tracker.application.use_cases import CreateHobby
 from hobby_tracker.domain import Hobby
 
 
