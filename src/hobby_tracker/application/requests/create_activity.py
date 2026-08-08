@@ -4,7 +4,7 @@ from uuid import UUID
 
 
 @dataclass(frozen=True)
-class AddActivityEntryRequest:
+class CreateActivityRequest:
     hobby_id: UUID
     duration: timedelta
     started_at: datetime | None = None

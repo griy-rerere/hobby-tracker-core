@@ -3,7 +3,7 @@ from uuid import UUID, uuid7
 
 import pytest
 
-from hobby_tracker.domain import ActivityEntry, Hobby
+from hobby_tracker.domain import Activity, Hobby
 
 
 @pytest.fixture
@@ -22,8 +22,8 @@ def hobby_id() -> UUID:
 
 
 @pytest.fixture
-def activity_entry(hobby_id: UUID) -> ActivityEntry:
-    return ActivityEntry(
+def activity(hobby_id: UUID) -> Activity:
+    return Activity(
         hobby_id=hobby_id,
         duration=timedelta(minutes=30),
         note="Practice scales",

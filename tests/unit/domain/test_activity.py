@@ -3,18 +3,18 @@ from uuid import uuid7
 
 import pytest
 
-from hobby_tracker.domain import ActivityEntry
+from hobby_tracker.domain import Activity
 
 
-def test_activity_entry_creates(activity_entry: ActivityEntry) -> None:
-    assert activity_entry.duration == timedelta(minutes=30)
-    assert activity_entry.note == "Practice scales"
+def test_activity_creates(activity: Activity) -> None:
+    assert activity.duration == timedelta(minutes=30)
+    assert activity.note == "Practice scales"
 
 
-def test_activity_entry_generates_uuid(
+def test_activity_generates_uuid(
     hobby_id,
 ) -> None:
-    activity = ActivityEntry(
+    activity = Activity(
         hobby_id=hobby_id,
         duration=timedelta(minutes=30),
     )
@@ -30,7 +30,7 @@ def test_activity_entry_generates_uuid(
         timedelta(minutes=-10),
     ],
 )
-def test_activity_entry_rejects_invalid_duration(
+def test_activity_rejects_invalid_duration(
     hobby_id,
     duration: timedelta,
 ) -> None:
@@ -38,31 +38,31 @@ def test_activity_entry_rejects_invalid_duration(
         ValueError,
         match="Activity duration must be positive",
     ):
-        ActivityEntry(
+        Activity(
             hobby_id=hobby_id,
             duration=duration,
         )
 
 
-def test_activity_entry_rejects_long_note(hobby_id) -> None:
+def test_activity_rejects_long_note(hobby_id) -> None:
     with pytest.raises(
         ValueError,
         match="Note is too long",
     ):
-        ActivityEntry(
+        Activity(
             hobby_id=hobby_id,
             duration=timedelta(minutes=30),
             note="a" * 501,
         )
 
 
-def test_activity_entry_can_be_reconstructed(
+def test_activity_can_be_reconstructed(
     hobby_id,
     fixed_datetime,
 ) -> None:
     activity_id = uuid7()
 
-    activity = ActivityEntry(
+    activity = Activity(
         id=activity_id,
         hobby_id=hobby_id,
         started_at=fixed_datetime,
@@ -77,27 +77,27 @@ def test_activity_entry_can_be_reconstructed(
     assert activity.note == "Training"
 
 
-def test_activity_entry_is_immutable(
-    activity_entry: ActivityEntry,
+def test_activity_is_immutable(
+    activity: Activity,
 ) -> None:
     with pytest.raises(AttributeError):
-        activity_entry.duration = timedelta(hours=2)
+        activity.duration = timedelta(hours=2)
 
 
-def test_activity_entry_equality_depends_on_all_fields(
+def test_activity_equality_depends_on_all_fields(
     hobby_id,
 ) -> None:
     activity_id = uuid7()
     started_at = datetime(2026, 1, 1, tzinfo=timezone.utc)
 
-    activity_1 = ActivityEntry(
+    activity_1 = Activity(
         id=activity_id,
         hobby_id=hobby_id,
         started_at=started_at,
         duration=timedelta(minutes=30),
     )
 
-    activity_2 = ActivityEntry(
+    activity_2 = Activity(
         id=activity_id,
         hobby_id=hobby_id,
         started_at=started_at,

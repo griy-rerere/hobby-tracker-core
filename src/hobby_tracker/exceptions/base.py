@@ -1,0 +1,2 @@
+class HobbyTrackerException(Exception):
+    pass
