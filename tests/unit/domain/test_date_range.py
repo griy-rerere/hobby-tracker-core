@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 import pytest
 
@@ -45,3 +45,18 @@ def test_date_range_is_immutable() -> None:
 
     with pytest.raises(AttributeError):
         date_range.start = date(2026, 2, 1)
+
+
+def test_date_range_checks_containing() -> None:
+    date_range = DateRange(
+        start=date(2026, 8, 7),
+        end=date(2026, 8, 9),
+    )
+    assert datetime(2026, 8, 8, 12, 30) in date_range
+    assert datetime(2026, 8, 10, 0, 0) not in date_range
+
+    test_day = date(2026, 8, 8)
+    date_range_oneday = DateRange(test_day, test_day)
+    test_datetime = datetime(2026, 8, 8, 12, 30)
+
+    assert test_datetime in date_range_oneday

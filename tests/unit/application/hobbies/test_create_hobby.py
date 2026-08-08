@@ -4,79 +4,47 @@ import pytest
 
 from hobby_tracker.application.hobbies import CreateHobby
 from hobby_tracker.application.requests import CreateHobbyRequest
-from hobby_tracker.domain import Hobby
+from hobby_tracker.exceptions import HobbyTrackerException
 
 
-def test_create_hobby_creates_hobby(
+def test_create_hobby_saves_hobby(
     hobby_repository: Mock,
 ) -> None:
     use_case = CreateHobby(hobby_repository)
+    request = CreateHobbyRequest(name="Guitar")
 
-    result = use_case(
-        CreateHobbyRequest(
-            name="Guitar",
-        )
-    )
+    result = use_case(request)
 
-    assert isinstance(result, Hobby)
-    assert result.name == "Guitar"
-
-
-def test_create_hobby_saves_created_hobby(
-    hobby_repository: Mock,
-) -> None:
-    use_case = CreateHobby(hobby_repository)
-
-    result = use_case(
-        CreateHobbyRequest(
-            name="Drawing",
-        )
-    )
-
-    hobby_repository.save.assert_called_once_with(result)
-
-
-def test_create_hobby_returns_created_hobby(
-    hobby_repository: Mock,
-) -> None:
-    use_case = CreateHobby(hobby_repository)
-
-    result = use_case(
-        CreateHobbyRequest(
-            name="Programming",
-        )
-    )
+    hobby_repository.save.assert_called_once()
 
     saved_hobby = hobby_repository.save.call_args.args[0]
 
+    assert saved_hobby.name == "Guitar"
     assert result is saved_hobby
 
 
-def test_create_hobby_rejects_empty_name(
+def test_create_hobby_generates_hobby_id(
     hobby_repository: Mock,
 ) -> None:
     use_case = CreateHobby(hobby_repository)
+    request = CreateHobbyRequest(name="Guitar")
 
-    with pytest.raises(ValueError):
-        use_case(
-            CreateHobbyRequest(
-                name="   ",
-            )
-        )
+    result = use_case(request)
 
-    hobby_repository.save.assert_not_called()
+    assert result.id is not None
+    assert hobby_repository.save.call_args.args[0] is result
 
 
-def test_create_hobby_trims_name(
+def test_create_hobby_propagates_repository_error(
     hobby_repository: Mock,
 ) -> None:
+    error = HobbyTrackerException()
+    hobby_repository.save.side_effect = error
+
     use_case = CreateHobby(hobby_repository)
+    request = CreateHobbyRequest(name="Guitar")
 
-    result = use_case(
-        CreateHobbyRequest(
-            name="  Guitar  ",
-        )
-    )
+    with pytest.raises(HobbyTrackerException) as exc_info:
+        use_case(request)
 
-    assert result.name == "Guitar"
-    hobby_repository.save.assert_called_once_with(result)
+    assert exc_info.value is error

@@ -7,5 +7,5 @@ from hobby_tracker.domain import DateRange
 
 @dataclass(frozen=True)
 class ActivityStatisticsQuery:
-    hobby_ids: Iterable[UUID] | None
-    date_range: DateRange | None
+    date_range: DateRange
+    hobby_ids: Iterable[UUID] | None = None
