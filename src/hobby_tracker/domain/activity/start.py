@@ -9,3 +9,6 @@ class ActivityStart:
     def __post_init__(self) -> None:
         if self.value.tzinfo != timezone.utc:
             raise ValueError("ActivityStart must UTC datetime")
+
+        if self.value > datetime.now(timezone.utc):
+            raise ValueError("Activity cannot start in the future")

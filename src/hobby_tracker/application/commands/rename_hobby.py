@@ -8,7 +8,7 @@ from ..unit_of_work import UnitOfWork
 
 @dataclass(frozen=True, slots=True)
 class RenameHobbyCommand:
-    id: UUID
+    hobby_id: UUID
     new_name: str
 
 
@@ -20,5 +20,5 @@ class RenameHobbyHandler:
     def __call__(self, cmd: RenameHobbyCommand) -> None:
         with self._uow:
             new_name = HobbyName(cmd.new_name)
-            hobby = self._hobby_repo.get_by_id(cmd.id)
+            hobby = self._hobby_repo.get_by_id(cmd.hobby_id)
             hobby.rename(new_name)

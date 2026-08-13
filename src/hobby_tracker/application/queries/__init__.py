@@ -1,3 +1,8 @@
-from .hobbies_stats import HobbiesStatsHandler, HobbiesStatsView, Stats
+from .hobbies_stats import (
+    HobbiesStatsHandler,
+    HobbiesStatsQuery,
+    HobbiesStatsView,
+    Stats,
+)
 
-__all__ = ["Stats", "HobbiesStatsView", "HobbiesStatsHandler"]
+__all__ = ["Stats", "HobbiesStatsView", "HobbiesStatsHandler", "HobbiesStatsQuery"]

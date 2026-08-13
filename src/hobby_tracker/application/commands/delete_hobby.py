@@ -8,7 +8,7 @@ from ..unit_of_work import UnitOfWork
 
 @dataclass(frozen=True, slots=True)
 class DeleteHobbyCommand:
-    id: UUID
+    hobby_id: UUID
 
 
 class DeleteHobbyHandler:
@@ -18,5 +18,5 @@ class DeleteHobbyHandler:
 
     def __call__(self, cmd: DeleteHobbyCommand) -> None:
         with self._uow:
-            hobby = self._hobby_repo.get_by_id(cmd.id)
+            hobby = self._hobby_repo.get_by_id(cmd.hobby_id)
             self._hobby_repo.delete(hobby)
