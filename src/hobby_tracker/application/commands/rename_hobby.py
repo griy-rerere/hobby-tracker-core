@@ -22,3 +22,4 @@ class RenameHobbyHandler:
             new_name = HobbyName(cmd.new_name)
             hobby = self._hobby_repo.get_by_id(cmd.hobby_id)
             hobby.rename(new_name)
+            self._uow.commit()

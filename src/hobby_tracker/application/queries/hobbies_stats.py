@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
-from typing import Mapping, Protocol
+from typing import Iterable, Protocol
 
 
 @dataclass(frozen=True, slots=True)
@@ -17,8 +17,14 @@ class Stats:
 
 
 @dataclass(frozen=True, slots=True)
+class HobbyStats:
+    hobby_name: str
+    stats: Stats
+
+
+@dataclass(frozen=True, slots=True)
 class HobbiesStatsView:
-    hobbies_stats: Mapping[str, Stats]
+    hobbies_stats: Iterable[HobbyStats]
     common_stats: Stats
 
 

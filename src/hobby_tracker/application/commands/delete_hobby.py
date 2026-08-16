@@ -20,3 +20,4 @@ class DeleteHobbyHandler:
         with self._uow:
             hobby = self._hobby_repo.get_by_id(cmd.hobby_id)
             self._hobby_repo.delete(hobby)
+            self._uow.commit()

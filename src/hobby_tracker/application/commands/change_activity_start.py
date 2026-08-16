@@ -27,3 +27,4 @@ class ChangeActivityStartHandler:
             new_start = ActivityStart(cmd.new_start)
             activity = self._activity_repo.get_by_id(cmd.activity_id)
             activity.change_start(new_start)
+            self._uow.commit()
