@@ -26,3 +26,4 @@ class ChangeActivityDurationHandler:
             new_duration = ActivityDuration(cmd.new_duration_minutes)
             activity = self._activity_repo.get_by_id(cmd.activity_id)
             activity.change_duration(new_duration)
+            self._uow.commit()

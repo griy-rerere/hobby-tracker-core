@@ -26,3 +26,4 @@ class SetActivityNoteHandler:
             note = ActivityNote(cmd.note)
             activity = self._activity_repo.get_by_id(cmd.activity_id)
             activity.set_note(note)
+            self._uow.commit()

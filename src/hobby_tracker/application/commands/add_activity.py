@@ -9,7 +9,7 @@ from hobby_tracker.domain.activity import (
     ActivityRepository,
     ActivityStart,
 )
-from hobby_tracker.domain.exceptions import HobbyNotFound
+from hobby_tracker.domain.exceptions import ActivityAttributeDuplicate, HobbyNotFound
 from hobby_tracker.domain.hobby import HobbyRepository
 
 from ..unit_of_work import UnitOfWork
@@ -44,6 +44,9 @@ class AddActivityHandler:
             duration = ActivityDuration(cmd.duration_minutes)
             note = ActivityNote(cmd.note) if cmd.note is not None else None
 
+            if self._activity_repo.exists(cmd.activity_id):
+                raise ActivityAttributeDuplicate(cmd.activity_id)
+
             activity = Activity(
                 id=cmd.activity_id,
                 hobby_id=cmd.hobby_id,
@@ -52,3 +55,4 @@ class AddActivityHandler:
                 started_at=start,
             )
             self._activity_repo.add(activity)
+            self._uow.commit()

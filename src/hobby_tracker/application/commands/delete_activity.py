@@ -24,3 +24,4 @@ class DeleteActivityHandler:
         with self._uow:
             activity = self._activity_repo.get_by_id(cmd.activity_id)
             self._activity_repo.delete(activity)
+            self._uow.commit()

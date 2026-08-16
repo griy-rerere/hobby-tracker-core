@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone
 from unittest.mock import MagicMock, Mock, patch
 from uuid import UUID
@@ -7,7 +8,11 @@ import pytest
 from hobby_tracker.application import commands
 from hobby_tracker.application.unit_of_work import UnitOfWork
 from hobby_tracker.domain.activity import ActivityRepository
-from hobby_tracker.domain.exceptions import HobbyNotFound
+from hobby_tracker.domain.exceptions import (
+    ActivityAttributeDuplicate,
+    HobbyAttributeDuplicate,
+    HobbyNotFound,
+)
 from hobby_tracker.domain.hobby import HobbyRepository
 
 
@@ -26,6 +31,8 @@ def activity_repo() -> ActivityRepository:
     return Mock(spec=ActivityRepository)
 
 
+@pytest.mark.parametrize("name_exists", [True, False])
+@pytest.mark.parametrize("hobby_exists", [True, False])
 @patch("hobby_tracker.application.commands.add_hobby.HobbyName")
 @patch("hobby_tracker.application.commands.add_hobby.Hobby")
 def test_add_hobby(
@@ -35,7 +42,11 @@ def test_add_hobby(
     hobby_repo: HobbyRepository,
     hobby_id: UUID,
     hobby_name_str: str,
+    name_exists: bool,
+    hobby_exists: bool,
 ):
+    hobby_repo.exists.return_value = hobby_exists
+    hobby_repo.name_exists.return_value = name_exists
     mock_name = Mock()
     mock_hobby = Mock()
     mock_HobbyName.return_value = mock_name
@@ -43,6 +54,16 @@ def test_add_hobby(
 
     handler = commands.AddHobbyHandler(uow=uow, hobby_repo=hobby_repo)
     cmd = commands.AddHobbyCommand(id=hobby_id, name=hobby_name_str)
+
+    if name_exists:
+        with pytest.raises(HobbyAttributeDuplicate, match=re.escape(repr(mock_name))):
+            handler(cmd)
+        return
+
+    if hobby_exists:
+        with pytest.raises(HobbyAttributeDuplicate, match=hobby_id):
+            handler(cmd)
+        return
 
     handler(cmd)
 
@@ -87,6 +108,7 @@ def test_delete_hobby(uow: UnitOfWork, hobby_repo: HobbyRepository, hobby_id: UU
     hobby_repo.delete.assert_called_once_with(mock_hobby)
 
 
+@pytest.mark.parametrize("activity_exists", [True, False])
 @pytest.mark.parametrize("hobby_exists", [True, False])
 @pytest.mark.parametrize("note_text", ["Writing unit tests", None])
 @patch("hobby_tracker.application.commands.add_activity.Activity")
@@ -107,7 +129,9 @@ def test_add_activity(
     activity_duration_minutes: int,
     note_text: str | None,
     hobby_exists: bool,
+    activity_exists: bool,
 ):
+    activity_repo.exists.return_value = activity_exists
     hobby_repo.exists.return_value = hobby_exists
     mock_start, mock_duration, mock_note, mock_activity = Mock(), Mock(), Mock(), Mock()
     (
@@ -130,6 +154,11 @@ def test_add_activity(
 
     if not hobby_exists:
         with pytest.raises(HobbyNotFound, match=hobby_id):
+            handler(cmd)
+        return
+
+    if activity_exists:
+        with pytest.raises(ActivityAttributeDuplicate, match=activity_id):
             handler(cmd)
         return
 

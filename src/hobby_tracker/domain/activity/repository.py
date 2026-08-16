@@ -5,29 +5,25 @@ from .activity import Activity
 
 
 class ActivityRepository(Protocol):
-    def add(self, hobby: Activity) -> None: ...
+    def add(self, activity: Activity) -> None: ...
 
-    """
-    Raises:
-        ActivityAttributeDuplicate if UUID already exists
-    """
+    def get_by_id(self, id: UUID) -> Activity:
+        """
+        Repository must track itself all the changes with loaded entities
+        like Python list
 
-    def get_by_id(self, id: UUID) -> Activity: ...
-
-    """
-    Repository must track itself all the changes with loaded entities like Python list
-
-    Raises:
-        ActivityNotFound(id) if activity not found
-    """
+        Raises:
+            ActivityNotFound(id) if activity not found
+        """
+        ...
 
     def exists(self, id: UUID) -> bool: ...
 
-    def delete(self, hobby: Activity) -> None: ...
+    def delete(self, activity: Activity) -> None:
+        """
+        Only tracking activity is allowed to delete
 
-    """
-    Only tracking activity is allowed to delete
-    
-    Raises:
-        ActivityDeleteError if try to delete activity not from Repository
-    """
+        Raises:
+            ActivityDeleteError if try to delete activity not from Repository
+        """
+        ...
