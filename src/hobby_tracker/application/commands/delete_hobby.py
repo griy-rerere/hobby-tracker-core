@@ -4,14 +4,15 @@ from uuid import UUID
 from hobby_tracker.domain.hobby import HobbyRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class DeleteHobbyCommand:
+class DeleteHobbyCommand(Command):
     hobby_id: UUID
 
 
-class DeleteHobbyHandler:
+class DeleteHobbyHandler(CommandHandler[DeleteHobbyCommand]):
     def __init__(self, uow: UnitOfWork, hobby_repo: HobbyRepository) -> None:
         self._uow = uow
         self._hobby_repo = hobby_repo

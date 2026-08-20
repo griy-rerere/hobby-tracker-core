@@ -5,15 +5,16 @@ from hobby_tracker.domain.exceptions import HobbyAttributeDuplicate
 from hobby_tracker.domain.hobby import Hobby, HobbyName, HobbyRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class AddHobbyCommand:
+class AddHobbyCommand(Command):
     id: UUID
     name: str
 
 
-class AddHobbyHandler:
+class AddHobbyHandler(CommandHandler[AddHobbyCommand]):
     def __init__(self, uow: UnitOfWork, hobby_repo: HobbyRepository) -> None:
         self._uow = uow
         self._hobby_repo = hobby_repo

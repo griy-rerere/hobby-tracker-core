@@ -1,15 +1,12 @@
-from .hobbies_stats import (
-    HobbiesStatsHandler,
-    HobbiesStatsQuery,
-    HobbiesStatsView,
-    HobbyStats,
-    Stats,
-)
+from .base import Query, QueryHandler
+from .hobbies_stats import HobbiesStatsQuery, HobbiesStatsView
+from .hobby_stats import HobbyStatsQuery, HobbyStatsView
 
 __all__ = [
-    "Stats",
+    "Query",
+    "QueryHandler",
     "HobbiesStatsView",
-    "HobbiesStatsHandler",
     "HobbiesStatsQuery",
-    "HobbyStats",
+    "HobbyStatsView",
+    "HobbyStatsQuery",
 ]

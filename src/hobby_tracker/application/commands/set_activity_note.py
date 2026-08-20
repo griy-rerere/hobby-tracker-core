@@ -4,15 +4,16 @@ from uuid import UUID
 from hobby_tracker.domain.activity import ActivityNote, ActivityRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class SetActivityNoteCommand:
+class SetActivityNoteCommand(Command):
     activity_id: UUID
     note: str
 
 
-class SetActivityNoteHandler:
+class SetActivityNoteHandler(CommandHandler[SetActivityNoteCommand]):
     def __init__(
         self,
         uow: UnitOfWork,
