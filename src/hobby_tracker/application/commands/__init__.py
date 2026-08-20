@@ -1,5 +1,6 @@
 from .add_activity import AddActivityCommand, AddActivityHandler
 from .add_hobby import AddHobbyCommand, AddHobbyHandler
+from .base import Command, CommandHandler
 from .change_activity_duration import (
     ChangeActivityDurationCommand,
     ChangeActivityDurationHandler,
@@ -15,6 +16,8 @@ from .rename_hobby import RenameHobbyCommand, RenameHobbyHandler
 from .set_activity_note import SetActivityNoteCommand, SetActivityNoteHandler
 
 __all__ = [
+    "Command",
+    "CommandHandler",
     "AddHobbyCommand",
     "AddHobbyHandler",
     "RenameHobbyCommand",

@@ -13,10 +13,11 @@ from hobby_tracker.domain.exceptions import ActivityAttributeDuplicate, HobbyNot
 from hobby_tracker.domain.hobby import HobbyRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class AddActivityCommand:
+class AddActivityCommand(Command):
     activity_id: UUID
     hobby_id: UUID
     started_at: datetime
@@ -24,7 +25,7 @@ class AddActivityCommand:
     note: str | None
 
 
-class AddActivityHandler:
+class AddActivityHandler(CommandHandler[AddActivityCommand]):
     def __init__(
         self,
         uow: UnitOfWork,

@@ -4,14 +4,15 @@ from uuid import UUID
 from hobby_tracker.domain.activity import ActivityRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class DeleteActivityCommand:
+class DeleteActivityCommand(Command):
     activity_id: UUID
 
 
-class DeleteActivityHandler:
+class DeleteActivityHandler(CommandHandler[DeleteActivityCommand]):
     def __init__(
         self,
         uow: UnitOfWork,

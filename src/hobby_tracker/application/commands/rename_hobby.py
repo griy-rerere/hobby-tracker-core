@@ -4,15 +4,16 @@ from uuid import UUID
 from hobby_tracker.domain.hobby import HobbyName, HobbyRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class RenameHobbyCommand:
+class RenameHobbyCommand(Command):
     hobby_id: UUID
     new_name: str
 
 
-class RenameHobbyHandler:
+class RenameHobbyHandler(CommandHandler[RenameHobbyCommand]):
     def __init__(self, uow: UnitOfWork, hobby_repo: HobbyRepository) -> None:
         self._uow = uow
         self._hobby_repo = hobby_repo

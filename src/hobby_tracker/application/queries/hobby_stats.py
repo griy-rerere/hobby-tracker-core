@@ -1,19 +1,17 @@
 from dataclasses import dataclass
 from datetime import date
-from typing import Iterable
 
-from ..common import HobbyStats, Stats
+from ..common import HobbyStats
 from .base import Query
 
 
 @dataclass(frozen=True, slots=True)
-class HobbiesStatsView:
+class HobbyStatsView:
     stats_chart: bytes
-    hobbies_stats: Iterable[HobbyStats]
-    common_stats: Stats
+    stats: HobbyStats
 
 
 @dataclass(frozen=True, slots=True)
-class HobbiesStatsQuery(Query[HobbiesStatsView]):
+class HobbyStatsQuery(Query[HobbyStatsView]):
     date_from: date
     date_to: date

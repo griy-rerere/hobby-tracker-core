@@ -4,15 +4,16 @@ from uuid import UUID
 from hobby_tracker.domain.activity import ActivityDuration, ActivityRepository
 
 from ..unit_of_work import UnitOfWork
+from .base import Command, CommandHandler
 
 
 @dataclass(frozen=True, slots=True)
-class ChangeActivityDurationCommand:
+class ChangeActivityDurationCommand(Command):
     activity_id: UUID
     new_duration_minutes: int
 
 
-class ChangeActivityDurationHandler:
+class ChangeActivityDurationHandler(CommandHandler[ChangeActivityDurationCommand]):
     def __init__(
         self,
         uow: UnitOfWork,
