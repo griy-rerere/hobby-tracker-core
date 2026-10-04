@@ -1,4 +1,4 @@
-# 🏗️ Hobby Tracker — Core Domain (v0.1.0)
+# Hobby Tracker — Core (v0.1.0)
 
 ![Python Version](https://img.shields.io/badge/Python%20Version-3.14%2B-0969da?logo=python)
 ![license](https://img.shields.io/badge/license-MIT-cf222e)
