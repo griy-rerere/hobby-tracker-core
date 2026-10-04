@@ -1,6 +1,10 @@
 # 🏗️ Hobby Tracker — Core Domain (v0.1.0)
 
-[![Python Version](https://shields.io)](https://python.org) [![License: MIT](https://shields.io)](https://opensource.org) [![Code Style: Ruff](https://shields.io)](https://github.com) [![Type Checking: MyPy](https://shields.io)](https://github.com)
+![Python Version](https://img.shields.io/badge/Python%20Version-3.14%2B-0969da?logo=python)
+![license](https://img.shields.io/badge/license-MIT-cf222e)
+![Code Style](https://img.shields.io/badge/Code%20Style-Ruff-D0F562?logo=ruff)
+![Type Checking](https://img.shields.io/badge/Type%20Checking-mypy-blue)
+
 
 
 This repository contains the **pure business logic and domain core** for the Hobby Time Tracker application. The project is strictly designed using **Domain-Driven Design (DDD)** and **Clean Architecture** principles.
