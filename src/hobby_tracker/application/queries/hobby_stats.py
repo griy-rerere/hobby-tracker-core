@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import date
+from uuid import UUID
 
 from ..common import HobbyStats
 from .base import Query
@@ -13,5 +14,6 @@ class HobbyStatsView:
 
 @dataclass(frozen=True, slots=True)
 class HobbyStatsQuery(Query[HobbyStatsView]):
+    hobby_id: UUID
     date_from: date
     date_to: date
